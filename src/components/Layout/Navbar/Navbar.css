@@ -1,0 +1,70 @@
+nav {
+  background-color: var(--primary-navbar);
+  border-bottom: 1px solid var(--primary-navy);
+}
+
+nav ul > li > a {
+  text-transform: uppercase;
+  color: var(--primary-navy) !important;
+}
+
+.navbar-nav > .nav-item {
+  margin-right: 20px;
+  border-bottom: 3px solid transparent;
+}
+
+.navbar-nav .nav-link.active {
+  border-bottom: 3px solid var(--primary-orange) !important;
+}
+
+.navbar-nav .nav-item:hover {
+  border-bottom: 3px solid var(--primary-green);
+  transition: border 0.5s ease-in-out;
+}
+
+nav .nav-link {
+  font-weight: bold;
+}
+form div input[type="search"] {
+  background-color: var(--primary-peach);
+}
+
+/* Logo */
+.logo {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  padding: 4px;
+  border: 2px solid var(--primary-navy);
+  background-color: orangered;
+  margin-right: 4px;
+}
+
+.logo-label {
+  font-size: 14px;
+  line-height: 1.1;
+}
+.logo-label .logo-label-part1 {
+  font-size: 24px;
+  font-weight: bold;
+  color: green;
+  font-family: "Dancing Script", "san-serif";
+}
+.logo-label .logo-label-part2 {
+  color: darkgreen;
+  font-size: 18px;
+  font-family: "Dancing Script", "san-serif";
+  margin-left: 35px;
+}
+.logo-label .logo-label-part3 {
+  text-transform: uppercase;
+  font-style: italic;
+  font-size: 30px;
+}
+.img-label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* Logo End */
