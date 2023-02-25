@@ -1,5 +1,5 @@
 import React from "react";
-import Typed from "react-typed";
+import Typewriter from "typewriter-effect";
 import image1 from "../../../assets/addl-images/breakfast-thali.jpeg";
 import image2 from "../../../assets/addl-images/italian-cobmo-meal.jpeg";
 import image3 from "../../../assets/addl-images/enchilladas.jpeg";
@@ -9,18 +9,12 @@ const Menu = () => {
   const renderMenu = () => {
     return (
       <section>
-        <Typed
-          className="typed-text"
-          strings={[
-            "Our Daily Spacials",
-            "Burger Bonanza",
-            "Panipuri",
-            "MoMos",
-            "Southern Delicacies",
-          ]}
-          typeSpeed={50}
-          backSpeed={60}
-          loop
+        <Typewriter
+          options={{
+            strings: ["PaniPuri", "Momos", "Pizzas", "Icecream"],
+            autoStart: true,
+            loop: true,
+          }}
         />
         <div className="container">
           <a href="/browser">
