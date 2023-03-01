@@ -1,0 +1,12 @@
+.checkbox-group {
+  min-height: 100px;
+  border: 1px solid #1f2922;
+  border-radius: 5px;
+  padding: 5px;
+  display: flex;
+}
+
+.label-input {
+  display: flex;
+  align-items: center;
+}

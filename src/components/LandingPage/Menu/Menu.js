@@ -4,6 +4,7 @@ import image1 from "../../../assets/addl-images/breakfast-thali.jpeg";
 import image2 from "../../../assets/addl-images/italian-cobmo-meal.jpeg";
 import image3 from "../../../assets/addl-images/enchilladas.jpeg";
 import "./Menu.css";
+import { Link } from "react-router-dom";
 
 const Menu = () => {
   const renderMenu = () => {
@@ -17,7 +18,7 @@ const Menu = () => {
           }}
         />
         <div className="container">
-          <a href="/browser">
+          <Link to="/catalog">
             <div className="d-flex justify-content-center align-items-center flex-wrap">
               <div
                 className="card"
@@ -67,7 +68,7 @@ const Menu = () => {
                 </div>
               </div>
             </div>
-          </a>
+          </Link>
         </div>
       </section>
     );

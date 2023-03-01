@@ -1,0 +1,12 @@
+.carousel-inner {
+  border: 10px solid var(--primary-white);
+  border-radius: 10px;
+  min-width: 800px;
+  max-width: 800px;
+}
+@media (width< 750px) {
+  .carousel-inner {
+    min-width: 400px;
+    max-width: 400px;
+  }
+}
