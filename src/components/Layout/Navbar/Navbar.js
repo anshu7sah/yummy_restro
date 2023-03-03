@@ -4,9 +4,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Navbar.css";
 import logo from "../../../assets/images/dosa.jpg";
 import { Link } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Navbar = () => {
-  console.log(window.location.pathname);
+  const { isAuthenticated } = useAuth0();
   const renderNavbar = () => (
     <nav className="navbar navbar-expand-lg ">
       <div className="container">
@@ -52,30 +53,34 @@ const Navbar = () => {
                 Browse
               </Link>
             </li>
-            <li className="nav-item">
-              <Link
-                className={
-                  window.location.pathname === "/signIn"
-                    ? "nav-link active"
-                    : "nav-link"
-                }
-                to="/signin"
-              >
-                Sign In
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link
-                className={
-                  window.location.pathname === "/register"
-                    ? "nav-link active"
-                    : "nav-link"
-                }
-                to="/register"
-              >
-                Register
-              </Link>
-            </li>
+            {!isAuthenticated && (
+              <li className="nav-item">
+                <Link
+                  className={
+                    window.location.pathname === "/signIn"
+                      ? "nav-link active"
+                      : "nav-link"
+                  }
+                  to="/signin"
+                >
+                  Sign In
+                </Link>
+              </li>
+            )}
+            {!isAuthenticated && (
+              <li className="nav-item">
+                <Link
+                  className={
+                    window.location.pathname === "/register"
+                      ? "nav-link active"
+                      : "nav-link"
+                  }
+                  to="/signup"
+                >
+                  Register
+                </Link>
+              </li>
+            )}
             <li className="nav-item">
               <Link
                 className={
@@ -88,6 +93,20 @@ const Navbar = () => {
                 Cart
               </Link>
             </li>
+            {isAuthenticated && (
+              <li className="nav-item">
+                <Link
+                  className={
+                    window.location.pathname === "/signout"
+                      ? "nav-link active"
+                      : "nav-link"
+                  }
+                  to="/signout"
+                >
+                  Sign out
+                </Link>
+              </li>
+            )}
           </ul>
           <form className="d-flex" role="search">
             <div className="input-group">
