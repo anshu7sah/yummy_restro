@@ -53,19 +53,40 @@ const Navbar = () => {
               </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/">
+              <Link
+                className={
+                  window.location.pathname === "/signIn"
+                    ? "nav-link active"
+                    : "nav-link"
+                }
+                to="/signin"
+              >
                 Sign In
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/">
+              <Link
+                className={
+                  window.location.pathname === "/register"
+                    ? "nav-link active"
+                    : "nav-link"
+                }
+                to="/register"
+              >
                 Register
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/">
+              <Link
+                className={
+                  window.location.pathname === "/cart"
+                    ? "nav-link active"
+                    : "nav-link"
+                }
+                to="/cart"
+              >
                 Cart
-              </a>
+              </Link>
             </li>
           </ul>
           <form className="d-flex" role="search">

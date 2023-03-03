@@ -4,8 +4,6 @@ import { API_BASE_URL } from "../../../config/Config";
 import "./BrowseCard.css";
 
 const BrowseCard = ({ dish, addToCart }) => {
-  console.log(dish);
-
   const renderAddButton = () => (
     <>
       <button
