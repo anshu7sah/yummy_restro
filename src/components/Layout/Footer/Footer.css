@@ -2,6 +2,7 @@
   background-color: var(--primary-navy);
   min-height: 13vh;
   color: var(--primary-alt-white);
+  border-top: 3px solid var(--primary-white) !important;
 }
 
 .footer-column {
