@@ -4,9 +4,9 @@ import React, { useEffect } from "react";
 const Signout = () => {
   const { logout } = useAuth0();
   useEffect(() => {
-    logout();
+    logout({ logoutParams: { returnTo: window.location.origin } });
   }, []); //eslint-disable-line react-hooks/exhaustive-deps
-  //   { logoutParams: { returnTo: window.location.origin } }
+
   return <></>;
 };
 
