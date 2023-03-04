@@ -2,7 +2,7 @@ const API_BASE_URL = process.env.REACT_APP_API_SERVER_URL;
 
 const TIMEOUT = process.env.REACT_APP_API_TIMEOUT;
 const DOMAIN = process.env.REACT_APP_AUTH0_DOMAIN;
-const CLIENT_ID = process.env.REACT_APP_AUTH0.CLIENT_ID;
+const CLIENT_ID = process.env.REACT_APP_AUTH0_CLIENT_ID;
 
 if (!API_BASE_URL) {
   throw new Error(
