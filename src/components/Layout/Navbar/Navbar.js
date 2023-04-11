@@ -1,10 +1,15 @@
 import React from "react";
-import { faBars, faSearch } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBars,
+  faSearch,
+  faCartPlus,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Navbar.css";
 import logo from "../../../assets/images/dosa.jpg";
 import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
+import { getTotalItemsInCart } from "../../Cart/CartHandler";
 
 const Navbar = () => {
   const { isAuthenticated, user } = useAuth0();
@@ -23,6 +28,23 @@ const Navbar = () => {
             </label>
           </div>
         </Link>
+        <div className="d-block d-lg-none">
+          <Link
+            className={
+              window.location.pathname === "/cart"
+                ? "nav-link active"
+                : "nav-link"
+            }
+            to="/cart"
+          >
+            <FontAwesomeIcon icon={faCartPlus} style={{ color: "orangered" }} />
+            <span>
+              <sup>
+                <small className="cart-badge">{getTotalItemsInCart()}</small>{" "}
+              </sup>{" "}
+            </span>
+          </Link>
+        </div>
         <button
           className="navbar-toggler"
           type="button"
@@ -95,7 +117,7 @@ const Navbar = () => {
                     style={{
                       background: "var(--primary-navy)",
                       color: "var(--primary-white)",
-                      padding: "5px 20px",
+                      padding: "5px 30px",
                       borderRadius: "15px",
                       fontWeight: "bold",
                     }}
@@ -114,7 +136,18 @@ const Navbar = () => {
                 }
                 to="/cart"
               >
-                Cart
+                Cart&nbsp;
+                <FontAwesomeIcon
+                  icon={faCartPlus}
+                  style={{ color: "orangered" }}
+                />
+                <span>
+                  <sup>
+                    <small className="cart-badge">
+                      {getTotalItemsInCart()}
+                    </small>{" "}
+                  </sup>{" "}
+                </span>
               </Link>
             </li>
             {isAuthenticated && (

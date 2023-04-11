@@ -63,26 +63,28 @@ export const Notification = ({ show, close, text }) => {
   return (
     <>
       {show ? <div onClick={close} className="notification-backdrop" /> : null}
-
-      <div
-        className="notification"
-        style={{
-          opacity: show ? "1" : "0",
-          transform: show ? "translateY(0vh)" : "translateY(-100vh)",
-        }}
-      >
-        <div className="notification-content">
-          <i
-            className="fa fa-check-circle fa-2x"
-            style={{ color: "#1BD4A5", marginBottom: "9.6px" }}
-          ></i>
-          <p>{showNotificationText()}</p>
-          <div
-            onClick={close}
-            className="close-button"
-            style={{ marginBottom: "0.7rem" }}
-          >
-            X
+      <div className="anshu">
+        {" "}
+        <div
+          className="notification"
+          style={{
+            opacity: show ? "1" : "0",
+            transform: show ? "translateY(0vh)" : "translateY(-100vh)",
+          }}
+        >
+          <div className="notification-content">
+            <i
+              className="fa fa-check-circle fa-2x"
+              style={{ color: "#1BD4A5", marginBottom: "9.6px" }}
+            ></i>
+            <p>{showNotificationText()}</p>
+            <div
+              onClick={close}
+              className="close-button"
+              style={{ marginBottom: "0.7rem" }}
+            >
+              X
+            </div>
           </div>
         </div>
       </div>

@@ -1,44 +1,70 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 import Layout from "../Layout/Layout";
 import {
-  getCart,
-  getCartTotal,
   getTotalItemsInCart,
-  removeDishFromCart,
+  getCartTotal,
+  getCart,
   updateDishQuantity,
+  removeDishFromCart,
 } from "./CartHandler";
-import { Link } from "react-router-dom";
-import MenuCard from "../UI/MenuCart/MenuCard";
 import { Notification } from "../UI/Notification/Notification";
+import MenuCard from "../UI/MenuCart/MenuCard";
+import Slider from "../UI/Slider/Slider";
 
 const Cart = () => {
-  const [dishes, setdishes] = useState([]);
+  const { isAuthenticated } = useAuth0();
+
+  const [dishes, setDishes] = useState([]);
+
   const [show, setShow] = useState(false);
   const [notificationText, setNotificationText] = useState("");
+
   const init = async () => {
     try {
       const items = await getCart();
-      setdishes(items);
+      setDishes(items);
     } catch (error) {
-      console.log("Error at Cart component at init function", error);
+      console.log("🚀 ~ file: Cart.js ~ line 18 ~ init ~ error", error);
     }
   };
+
   const updateCart = async (dish, action) => {
+    console.log("🚀 ~ file: Cart.js ~ line 28 ~ updateCart ~ dish", dish);
     await updateDishQuantity(dish);
-    setdishes(getCart());
+    setDishes(getCart());
     setNotificationText(
       action === "increment" ? "ITEM_QTY_INCREASED" : "ITEM_QTY_DECREASED"
     );
     setShow(true);
   };
+
   const removeDish = async (dish) => {
-    await removeDishFromCart(dish._id, () => setdishes(getCart()));
+    console.log("🚀 ~ file: Cart.js ~ line 33 ~ removeDish ~ dish", dish);
+    await removeDishFromCart(dish._id, () => {
+      setDishes(getCart());
+    });
     setNotificationText("REMOVE_FROM_CART");
     setShow(true);
   };
+
   useEffect(() => {
     init();
   }, []);
+
+  const closeHandler = () => {
+    setShow(false);
+  };
+
+  const displayNotification = () =>
+    show && (
+      <Notification show={show} text={notificationText} close={closeHandler} />
+    );
+
+  const showCartMobile = () => (
+    <Slider data={dishes} updateCart={updateCart} removeDish={removeDish} />
+  );
 
   const showCart = () => (
     <>
@@ -53,62 +79,55 @@ const Cart = () => {
       ))}
     </>
   );
-  const closeHandler = () => {
-    setShow(false);
-  };
-  const displayNotification = () => {
-    return (
-      show && (
-        <Notification
-          show={show}
-          text={notificationText}
-          close={closeHandler}
-        />
-      )
-    );
-  };
+
   const renderCart = () => {
     return (
       <Layout title={"Cart Summary"}>
         {displayNotification()}
-        <div className="container">
-          <div className="row justify-content-center mt-5 mb-3 ">
-            <div className="col-12 col-lg-4">
-              <h4>Your Cart containes {getTotalItemsInCart()} dish(es)</h4>
-            </div>
-            <div className="col-12 col-lg-auto">
-              <button className="btn btn-primary">
-                Continue Shopping<strong> &#x27F9;</strong>
-              </button>
-            </div>
+        <div className="row justify-content-center mt-5 mb-32x32">
+          <div className="col-12 col-lg-4">
+            <h4>Your Cart contains {getTotalItemsInCart()} dish(es)</h4>
           </div>
-          <div className="row justify-Content-center mt-5">
-            <div className="col-lg-6 col-7">
-              <div className="row justify-content-start">{showCart()}</div>
-            </div>
-            <div className="col-lg-5 col-md-6">
-              <h5 style={{ textDecoration: "underline" }}>
-                Total:
-                <i className="fa fa-inr" />{" "}
-                <span style={{ padding: "0 5px" }}>
-                  {getCartTotal() ? getCartTotal().toFixed(2) : 0}
-                </span>
-              </h5>
+          <div className="col-12 col-lg-auto">
+            <Link to="/catalog">
+              <button className="btn btn-primary">
+                Continue Shopping <strong>&#x27F9;</strong>
+              </button>
+            </Link>
+          </div>
+        </div>
+        <div className="row justify-content-center mt-5">
+          <div className="col-12 order-1 d-block d-lg-none">
+            {showCartMobile()}
+          </div>
+          <div className="col-lg-6 col-6  mt-3 mt-md-0 order-1 order-lg-0 d-none d-lg-block">
+            <div className="row justify-content-start">{showCart()}</div>
+          </div>
+          <div className="col-lg-5 col-md-6 ">
+            <h5 style={{ textDecoration: "underline" }}>
+              Total: <i className="fa fa-inr" />
+              <span style={{ padding: "0 5px" }}>
+                {" "}
+                {getCartTotal().toFixed(2)}
+              </span>{" "}
+            </h5>
+
+            {!isAuthenticated && (
               <Link to="/signin">
                 <button className="btn btn-success">
-                  {" "}
-                  <i className="fa fa-lock" />
+                  <i className="fa fa-lock" />{" "}
                   <span style={{ padding: "5px 10px" }}>
                     Signin to Checkout
                   </span>
                 </button>
               </Link>
-            </div>
+            )}
           </div>
         </div>
       </Layout>
     );
   };
+
   return <>{renderCart()}</>;
 };
 
