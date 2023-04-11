@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const Navbar = () => {
-  const { isAuthenticated } = useAuth0();
+  const { isAuthenticated, user } = useAuth0();
   const renderNavbar = () => (
     <nav className="navbar navbar-expand-lg ">
       <div className="container">
@@ -78,6 +78,30 @@ const Navbar = () => {
                   to="/signup"
                 >
                   Register
+                </Link>
+              </li>
+            )}
+            {isAuthenticated && (
+              <li className="nav-item">
+                <Link
+                  className={
+                    window.location.pathname === "/me"
+                      ? "nav-link active"
+                      : "nav-link"
+                  }
+                  to="/me"
+                >
+                  <span
+                    style={{
+                      background: "var(--primary-navy)",
+                      color: "var(--primary-white)",
+                      padding: "5px 20px",
+                      borderRadius: "15px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {user.name}
+                  </span>
                 </Link>
               </li>
             )}
