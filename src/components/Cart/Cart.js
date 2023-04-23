@@ -52,7 +52,6 @@ const Cart = () => {
       }
     }
   };
-  s;
 
   const init = async () => {
     try {
@@ -85,7 +84,7 @@ const Cart = () => {
 
   useEffect(() => {
     init();
-  }, []);
+  }, []); //eslint-disable-line react-hooks/exhaustive-deps
 
   const closeHandler = () => {
     setShow(false);
