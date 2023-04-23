@@ -12,17 +12,51 @@ import {
 import { Notification } from "../UI/Notification/Notification";
 import MenuCard from "../UI/MenuCart/MenuCard";
 import Slider from "../UI/Slider/Slider";
+import CheckoutForm from "../UI/CheckoutForm/CheckoutForm";
+import { getUserAddress, updateUserAddress } from "../../api/user";
 
 const Cart = () => {
-  const { isAuthenticated } = useAuth0();
+  const { isAuthenticated, user, getAccessTokenSilently } = useAuth0();
 
   const [dishes, setDishes] = useState([]);
 
   const [show, setShow] = useState(false);
   const [notificationText, setNotificationText] = useState("");
+  const { address, setAddress } = useState({});
+
+  const updateAddress = async (address) => {
+    const { sub } = user;
+    const id = sub.split("|")[1];
+    try {
+      const token = await getAccessTokenSilently();
+      const result = await updateUserAddress(id, address, token);
+      console.log("result while updating the user address: ", result.data);
+    } catch (error) {
+      console.log("error while updating the user address: ", error);
+    }
+  };
+
+  const getAddress = async () => {
+    const { sub } = user;
+    const id = sub.split("|")[1];
+    try {
+      const token = await getAccessTokenSilently();
+      const result = await getUserAddress(id, token);
+      setAddress(result.data);
+    } catch (error) {
+      if (error.response) {
+        console.log(
+          "Error at Cart.js at getAddress function",
+          error.response.data.error
+        );
+      }
+    }
+  };
+  s;
 
   const init = async () => {
     try {
+      isAuthenticated && getAddress();
       const items = await getCart();
       setDishes(items);
     } catch (error) {
@@ -104,15 +138,17 @@ const Cart = () => {
             <div className="row justify-content-start">{showCart()}</div>
           </div>
           <div className="col-lg-5 col-md-6 ">
-            <h5 style={{ textDecoration: "underline" }}>
-              Total: <i className="fa fa-inr" />
-              <span style={{ padding: "0 5px" }}>
-                {" "}
-                {getCartTotal().toFixed(2)}
-              </span>{" "}
-            </h5>
+            {getCartTotal() > 0 && (
+              <h5 style={{ textDecoration: "underline" }}>
+                Total: <i className="fa fa-inr" />
+                <span style={{ padding: "0 5px" }}>
+                  {" "}
+                  {getCartTotal().toFixed(2)}
+                </span>{" "}
+              </h5>
+            )}
 
-            {!isAuthenticated && (
+            {!isAuthenticated && getCartTotal() > 0 && (
               <Link to="/signin">
                 <button className="btn btn-success">
                   <i className="fa fa-lock" />{" "}
@@ -121,6 +157,13 @@ const Cart = () => {
                   </span>
                 </button>
               </Link>
+            )}
+            {isAuthenticated && getCartTotal() > 0 && (
+              <CheckoutForm
+                addressType={"Shipping Address"}
+                address={address}
+                updateAddress={updateAddress}
+              />
             )}
           </div>
         </div>
